@@ -210,11 +210,15 @@ export default {
         .catch(err => console.error("Error cargando pacientes:", err))
     },
     guardarPaciente() {
-      const url = this.nuevo.id 
-        ? `http://localhost:8000/api/pacientes/${this.nuevo.id}`
-        : 'http://localhost:8000/api/pacientes'
+    //  const url = this.nuevo.id 
+    //    ? `http://localhost:8000/api/pacientes/${this.nuevo.id}`
+    //    : 'http://localhost:8000/api/pacientes'
       
-      const method = this.nuevo.id ? 'put' : 'post'
+    const baseURL = import.meta.env.VITE_API_URL
+    const url = this.nuevo.id
+      ? `${baseURL}/pacientes/${this.nuevo.id}`
+      : `${baseURL}/pacientes`
+        const method = this.nuevo.id ? 'put' : 'post'
 
       axios[method](url, this.nuevo)
         .then(() => {
