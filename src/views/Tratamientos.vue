@@ -98,11 +98,11 @@ export default {
   },
   methods: {
     cargarTratamientos() {
-      axios.get('http://localhost:8000/api/tratamientos')
+      axios.get('/tratamientos')
         .then(res => { this.tratamientos = res.data })
     },
     cargarPacientes() {
-      axios.get('http://localhost:8000/api/pacientes')
+      axios.get('/pacientes')
         .then(res => { this.pacientes = res.data })
     },
     nuevoTratamiento() {
@@ -115,8 +115,8 @@ export default {
     },
     guardarTratamiento() {
       const url = this.formTratamiento.id 
-        ? `http://localhost:8000/api/tratamientos/${this.formTratamiento.id}`
-        : 'http://localhost:8000/api/tratamientos'
+        ? `/tratamientos/${this.formTratamiento.id}`
+        : '/tratamientos'
       const method = this.formTratamiento.id ? 'put' : 'post'
 
       axios[method](url, this.formTratamiento)
@@ -133,7 +133,7 @@ export default {
             showCancelButton: true
         }).then(result => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:8000/api/tratamientos/${id}`).then(() => {
+                axios.delete(`/tratamientos/${id}`).then(() => {
                     this.cargarTratamientos()
                     Swal.fire('Eliminado', '', 'success')
                 })

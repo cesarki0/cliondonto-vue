@@ -108,14 +108,14 @@ export default {
   },
   methods: {
     cargarPacientes() {
-      axios.get('http://localhost:8000/api/pacientes').then(res => { this.pacientes = res.data })
+      axios.get('/pacientes').then(res => { this.pacientes = res.data })
     },
     cargarOdontograma() {
       if (!this.pacienteId) {
         this.odontograma = []
         return
       }
-      axios.get('http://localhost:8000/api/odontogramas').then(res => {
+      axios.get('/odontogramas').then(res => {
         // En un sistema real filtraríamos por paciente_id en el backend
         this.odontograma = res.data.filter(o => o.paciente_id == this.pacienteId)
       })
@@ -150,7 +150,7 @@ export default {
         }
 
         const existing = this.odontograma.find(o => o.pieza == this.selectedTooth)
-        const url = existing ? `http://localhost:8000/api/odontogramas/${existing.id}` : 'http://localhost:8000/api/odontogramas'
+        const url = existing ? `/odontogramas/${existing.id}` : '/odontogramas'
         const method = existing ? 'put' : 'post'
 
         axios[method](url, data).then(() => {

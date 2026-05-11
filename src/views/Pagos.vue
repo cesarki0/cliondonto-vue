@@ -104,11 +104,11 @@ export default {
   },
   methods: {
     cargarPagos() {
-      axios.get('http://localhost:8000/api/pagos')
+      axios.get('/pagos')
         .then(res => { this.pagos = res.data })
     },
     cargarTratamientos() {
-      axios.get('http://localhost:8000/api/tratamientos')
+      axios.get('/tratamientos')
         .then(res => { this.tratamientos = res.data })
     },
     nuevoPago() {
@@ -133,7 +133,7 @@ export default {
       this.formPago.saldo = this.formPago.total - this.formPago.adelanto
     },
     guardarPago() {
-      axios.post('http://localhost:8000/api/pagos', this.formPago)
+      axios.post('/pagos', this.formPago)
         .then(() => {
           this.cargarPagos()
           this.modalPago = false
@@ -147,7 +147,7 @@ export default {
         showCancelButton: true
       }).then(result => {
         if (result.isConfirmed) {
-          axios.delete(`http://localhost:8000/api/pagos/${id}`).then(() => {
+          axios.delete(`/pagos/${id}`).then(() => {
             this.cargarPagos()
             Swal.fire('Eliminado', '', 'success')
           })

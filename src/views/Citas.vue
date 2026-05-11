@@ -98,11 +98,11 @@ export default {
   },
   methods: {
     cargarCitas() {
-      axios.get('http://localhost:8000/api/citas')
+      axios.get('/citas')
         .then(res => { this.citas = res.data })
     },
     cargarPacientes() {
-      axios.get('http://localhost:8000/api/pacientes')
+      axios.get('/pacientes')
         .then(res => { this.pacientes = res.data })
     },
     nuevaCita() {
@@ -115,8 +115,8 @@ export default {
     },
     guardarCita() {
       const url = this.formCita.id 
-        ? `http://localhost:8000/api/citas/${this.formCita.id}`
-        : 'http://localhost:8000/api/citas'
+        ? `/citas/${this.formCita.id}`
+        : '/api/citas'
       const method = this.formCita.id ? 'put' : 'post'
 
       axios[method](url, this.formCita)
@@ -134,7 +134,7 @@ export default {
         confirmButtonText: 'Sí'
       }).then(result => {
         if (result.isConfirmed) {
-          axios.delete(`http://localhost:8000/api/citas/${id}`).then(() => {
+          axios.delete(`/citas/${id}`).then(() => {
             this.cargarCitas()
             Swal.fire('Eliminado', '', 'success')
           })
