@@ -116,7 +116,7 @@ export default {
     guardarCita() {
       const url = this.formCita.id 
         ? `/citas/${this.formCita.id}`
-        : '/api/citas'
+        : '/citas'
       const method = this.formCita.id ? 'put' : 'post'
 
       axios[method](url, this.formCita)
