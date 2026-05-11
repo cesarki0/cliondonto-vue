@@ -25,9 +25,9 @@
                   {{ pago.tratamiento ? pago.tratamiento.descripcion : 'N/A' }} /
                   <small>{{ (pago.tratamiento && pago.tratamiento.paciente) ? pago.tratamiento.paciente.nombre : 'N/A' }}</small>
                 </CTableDataCell>
-                <CTableDataCell>${{ pago.total }}</CTableDataCell>
-                <CTableDataCell class="text-success">${{ pago.adelanto }}</CTableDataCell>
-                <CTableDataCell class="text-danger">${{ pago.saldo }}</CTableDataCell>
+                <CTableDataCell>Bs.-{{ pago.total }}</CTableDataCell>
+                <CTableDataCell class="text-success">Bs.-{{ pago.adelanto }}</CTableDataCell>
+                <CTableDataCell class="text-danger">Bs.-{{ pago.saldo }}</CTableDataCell>
                 <CTableDataCell>
                   <CButton color="danger" size="sm" @click="eliminarPago(pago.id)">Eliminar</CButton>
                 </CTableDataCell>
@@ -116,7 +116,7 @@ export default {
         id: null,
         tratamiento_id: '',
         fecha: new Date().toISOString().substr(0, 10),
-        total: 0,
+        total: '',
         adelanto: 0,
         saldo: 0
       }

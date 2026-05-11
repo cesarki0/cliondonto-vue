@@ -23,10 +23,10 @@
                 <CTableDataCell>{{ t.paciente ? t.paciente.nombre : 'N/A' }}</CTableDataCell>
                 <CTableDataCell>{{ t.descripcion }}</CTableDataCell>
                 <CTableDataCell>{{ t.pieza || '-' }}</CTableDataCell>
-                <CTableDataCell>${{ t.costo }}</CTableDataCell>
+                <CTableDataCell>Bs.-{{ t.costo }}</CTableDataCell>
                 <CTableDataCell>
                     <CBadge :color="colorPago(t)">
-                        ${{ totalPagado(t) }}
+                        Bs.-{{ totalPagado(t) }}
                     </CBadge>
                 </CTableDataCell>
                 <CTableDataCell>
