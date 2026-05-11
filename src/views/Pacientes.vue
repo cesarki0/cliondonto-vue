@@ -206,9 +206,9 @@ export default {
       this.modalNuevo = true
     },
     cargarPacientes() {
-      const baseURL = import.meta.env.VITE_API_URL
+      //const baseURL = import.meta.env.VITE_API_URL
       //axios.get('http://localhost:8000/api/pacientes')
-      axios.get(`${baseURL}/pacientes`)
+      axios.get('/pacientes')
         .then(res => { this.pacientes = res.data })
         .catch(err => console.error("Error cargando pacientes:", err))
     },
@@ -217,10 +217,10 @@ export default {
     //    ? `http://localhost:8000/api/pacientes/${this.nuevo.id}`
     //    : 'http://localhost:8000/api/pacientes'
       
-    const baseURL = import.meta.env.VITE_API_URL
+    //const baseURL = import.meta.env.VITE_API_URL
     const url = this.nuevo.id
-      ? `${baseURL}/pacientes/${this.nuevo.id}`
-      : `${baseURL}/pacientes`
+      ? `/pacientes/${this.nuevo.id}`
+      : `/pacientes`
         const method = this.nuevo.id ? 'put' : 'post'
 
       axios[method](url, this.nuevo)
@@ -257,7 +257,7 @@ export default {
         cancelButtonText: 'Cancelar'
       }).then((result) => {
         if (result.isConfirmed) {
-          axios.delete(`http://localhost:8000/api/pacientes/${id}`)
+          axios.delete(`/pacientes/${id}`)
             .then(() => {
               this.cargarPacientes()
               Swal.fire('Eliminado', 'El paciente fue eliminado.', 'success')
