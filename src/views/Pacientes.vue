@@ -205,7 +205,9 @@ export default {
       this.modalNuevo = true
     },
     cargarPacientes() {
-      axios.get('http://localhost:8000/api/pacientes')
+      const baseURL = import.meta.env.VITE_API_URL
+      //axios.get('http://localhost:8000/api/pacientes')
+      axios.get(`${baseURL}/pacientes`)
         .then(res => { this.pacientes = res.data })
         .catch(err => console.error("Error cargando pacientes:", err))
     },

@@ -1,7 +1,19 @@
+<script setup>
+import { ref } from 'vue'
+import { cilMenu } from '@coreui/icons'
+
+const sidebarVisible = ref(false) // Cerrado por defecto en móvil es mejor, pero el usuario dijo que "desaparece", así que quizás lo quiere ver.
+// Sin embargo, CoreUI lo manejará según el breakpoint si no forzamos visible.
+</script>
+
 <template>
-  <div style="display: flex; width: 100vw; min-height: 100vh; margin: 0; padding: 0; overflow-x: hidden;">
+  <div style="display: flex; min-height: 100vh; margin: 0; padding: 0; overflow-x: hidden;">
     
-    <CSidebar class="sidebar-custom border-end" style="width: 250px; flex-shrink: 0; min-height: 100vh;">
+    <CSidebar 
+      class="sidebar-custom border-end" 
+      :visible="sidebarVisible"
+      @visible-change="(val) => { sidebarVisible = val }"
+    >
       <CSidebarNav>
         <CNavItem>
           <router-link to="/pacientes" class="nav-link custom-nav-link">
@@ -31,9 +43,16 @@
       </CSidebarNav>
     </CSidebar>
 
-    <div style="flex-grow: 1; background-color: #f8f9fa; display: flex; flex-direction: column;">
+    <div style="flex-grow: 1; background-color: #f8f9fa; display: flex; flex-direction: column; min-width: 0;">
       
-      <header style="width: 100%; background: white; padding: 1rem; border-bottom: 1px solid #ddd;">
+      <header style="width: 100%; background: white; padding: 1rem; border-bottom: 1px solid #ddd; display: flex; align-items: center;">
+        <CHeaderToggler 
+          class="ps-1" 
+          @click="sidebarVisible = !sidebarVisible"
+          style="margin-right: 1rem;"
+        >
+          <CIcon :icon="cilMenu" size="lg" />
+        </CHeaderToggler>
         <h4 style="margin: 0;">Sistema Dental</h4>
       </header>
 
