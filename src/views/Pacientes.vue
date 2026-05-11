@@ -156,6 +156,7 @@ export default {
     }
   },
   mounted() {
+    console.log("API URL:", import.meta.env.VITE_API_URL)
     this.cargarPacientes()
   },
   methods: {
