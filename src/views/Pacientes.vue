@@ -14,7 +14,7 @@
           <CTable align="middle" responsive hover>
             <CTableHead color="light">
               <CTableRow>
-                <CTableHeaderCell>ID</CTableHeaderCell>
+                <!-- <CTableHeaderCell>ID</CTableHeaderCell> -->
                 <CTableHeaderCell>Nombre</CTableHeaderCell>
                 <CTableHeaderCell>Celular</CTableHeaderCell>
                 <CTableHeaderCell>Fecha Nacimiento</CTableHeaderCell>
@@ -23,15 +23,15 @@
             </CTableHead>
             <CTableBody>
               <CTableRow v-for="paciente in pacientesFiltrados" :key="paciente.id">
-                <CTableDataCell>{{ paciente.id }}</CTableDataCell>
+                <!-- <CTableDataCell>{{ paciente.id }}</CTableDataCell> -->
                 <CTableDataCell>{{ paciente.nombre }}</CTableDataCell>
                 <CTableDataCell>{{ paciente.celular }}</CTableDataCell>
                 <CTableDataCell>{{ paciente.fecha_nacimiento }}</CTableDataCell>
                 <CTableDataCell>
                   <CButton color="info" size="sm" @click="verPaciente(paciente)" title="Ver Detalle">Detalle</CButton>
                   <CButton color="warning" size="sm" class="ms-1" @click="editarPaciente(paciente)" title="Editar">Editar</CButton>
-                  <CButton color="dark" size="sm" class="ms-1" @click="$router.push('/odontogramas')" title="Odontograma">Odon.</CButton>
-                  <CButton color="success" size="sm" class="ms-1" @click="$router.push('/citas')" title="Citas">Citas</CButton>
+                  <!-- <CButton color="dark" size="sm" class="ms-1" @click="$router.push('/odontogramas')" title="Odontograma">Odon.</CButton> -->
+                  <CButton color="success" size="sm" class="ms-1"  @click="VerCitas(paciente.id)" title="Citas">Citas</CButton>
                   <CButton color="danger" size="sm" class="ms-1" @click="eliminarPaciente(paciente.id)" title="Eliminar">Eliminar</CButton>
                 </CTableDataCell>
               </CTableRow>
@@ -267,6 +267,10 @@ export default {
             })
         }
       })
+    },
+
+    VerCitas(id){
+      this.$router.push(`/pacientes/${id}/citas`);
     }
   }
 }

@@ -26,8 +26,8 @@
                   <small>{{ (pago.tratamiento && pago.tratamiento.paciente) ? pago.tratamiento.paciente.nombre : 'N/A' }}</small>
                 </CTableDataCell>
                 <CTableDataCell>Bs.-{{ pago.total }}</CTableDataCell>
-                <CTableDataCell class="text-success">Bs.-{{ pago.adelanto }}</CTableDataCell>
-                <CTableDataCell class="text-danger">Bs.-{{ pago.saldo }}</CTableDataCell>
+                <CTableDataCell class="text-success">Bs.{{ pago.adelanto }}</CTableDataCell>
+                <CTableDataCell class="text-danger">Bs.{{ pago.saldo }}</CTableDataCell>
                 <CTableDataCell>
                   <CButton color="danger" size="sm" @click="eliminarPago(pago.id)">Eliminar</CButton>
                 </CTableDataCell>
@@ -48,25 +48,31 @@
           <div class="mb-3">
             <CFormLabel>Tratamiento</CFormLabel>
             <CFormSelect
-            
-            v-model="formPago.tratamiento_id" @change="onTratamientoChange" required>
-              <option value="">Seleccione un tratamiento...</option>
+              v-model="formPago.tratamiento_id"
+              required
+            >
+              <option :value="null">Seleccione un tratamiento...</option>
               <option v-for="t in tratamientos" :key="t.id" :value="t.id">
-                {{ t.descripcion }} - {{ t.paciente ? t.paciente.nombre : '' }} (Total: ${{ t.costo }})
+                {{ t.descripcion }} - {{ t.paciente ? t.paciente.nombre : 'Sin Paciente' }} (Costo: Bs.{{ t.costo }})
               </option>
             </CFormSelect>
           </div>
           <div class="mb-3">
             <CFormInput type="date" v-model="formPago.fecha" label="Fecha de Pago" required />
           </div>
-          <div class="mb-3">
-            <CFormInput type="number" step="0.01" v-model="formPago.total" label="Costo Total del Tratamiento" readonly />
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <CFormInput type="number" step="0.01" v-model="formPago.total" label="Costo Total" readonly />
+            </div>
+            <div class="col-md-6 mb-3">
+              <CFormInput type="number" step="0.01" v-model="formPago.saldo_pendiente" label="Saldo Pendiente" readonly />
+            </div>
           </div>
           <div class="mb-3">
-            <CFormInput type="number" step="0.01" v-model="formPago.adelanto" label="Monto a Pagar" @input="calcularSaldo" required />
+            <CFormInput type="number" step="0.01" v-model="formPago.adelanto" label="Monto a Pagar (Adelanto)" required />
           </div>
           <div class="mb-3">
-            <CFormInput type="number" step="0.01" v-model="formPago.saldo" label="Saldo Restante" readonly />
+            <CFormInput type="number" step="0.01" v-model="formPago.saldo" label="Nuevo Saldo Restante" readonly />
           </div>
           <div class="text-end">
             <CButton color="secondary" class="me-2" @click="modalPago = false">Cancelar</CButton>
@@ -90,9 +96,10 @@ export default {
       modalPago: false,
       formPago: {
         id: null,
-        tratamiento_id: '',
+        tratamiento_id: null,
         fecha: new Date().toISOString().substr(0, 10),
         total: 0,
+        saldo_pendiente: 0,
         adelanto: 0,
         saldo: 0
       }
@@ -101,6 +108,14 @@ export default {
   mounted() {
     this.cargarPagos()
     this.cargarTratamientos()
+  },
+  watch: {
+    'formPago.tratamiento_id'(newId) {
+      this.handleTratamientoUpdate(newId)
+    },
+    'formPago.adelanto'(newVal) {
+      this.calcularSaldo(newVal)
+    }
   },
   methods: {
     cargarPagos() {
@@ -114,23 +129,43 @@ export default {
     nuevoPago() {
       this.formPago = {
         id: null,
-        tratamiento_id: '',
+        tratamiento_id: null,
         fecha: new Date().toISOString().substr(0, 10),
-        total: '',
+        total: 0,
+        saldo_pendiente: 0,
         adelanto: 0,
         saldo: 0
       }
       this.modalPago = true
     },
-    onTratamientoChange() {
-      const t = this.tratamientos.find(item => item.id == this.formPago.tratamiento_id)
+    handleTratamientoUpdate(selectedId) {
+      if (!selectedId) {
+        this.formPago.total = 0
+        this.formPago.saldo_pendiente = 0
+        this.formPago.adelanto = 0
+        this.formPago.saldo = 0
+        return
+      }
+
+      const t = this.tratamientos.find(item => String(item.id) === String(selectedId))
+      
       if (t) {
-        this.formPago.total = t.costo
-        this.calcularSaldo()
+        const costoTotal = parseFloat(t.costo) || 0
+        const pagado = t.pagos ? t.pagos.reduce((acc, p) => acc + parseFloat(p.adelanto), 0) : 0
+        
+        this.formPago.total = costoTotal
+        this.formPago.saldo_pendiente = parseFloat((costoTotal - pagado).toFixed(2))
+        this.formPago.adelanto = 0
+        this.formPago.saldo = this.formPago.saldo_pendiente
       }
     },
-    calcularSaldo() {
-      this.formPago.saldo = this.formPago.total - this.formPago.adelanto
+    calcularSaldo(valorAdelanto) {
+      const saldoPendiente = parseFloat(this.formPago.saldo_pendiente) || 0
+      const adelanto = parseFloat(valorAdelanto) || 0
+      
+      // Cálculo directo y preciso
+      const nuevoSaldo = saldoPendiente - adelanto
+      this.formPago.saldo = parseFloat(nuevoSaldo.toFixed(2))
     },
     guardarPago() {
       axios.post('/pagos', this.formPago)
