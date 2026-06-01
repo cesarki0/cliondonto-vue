@@ -34,7 +34,7 @@ const login = () => {
       if (res.data.success) {
         localStorage.setItem('token', res.data.token)
         Swal.fire('Bienvenido', 'Login correcto', 'success')
-        window.location.href = '/pacientes'
+        window.location.href = '/dashboard'
       } else {
         Swal.fire('Error', res.data.message, 'error')
       }
