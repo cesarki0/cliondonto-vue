@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div class="min-vh-100 d-flex flex-row align-items-center" :class="theme === 'dark' ? 'bg-dark' : 'bg-body-tertiary'">
     <CContainer>
       <CRow class="justify-content-center">
@@ -90,12 +91,43 @@ const theme = ref('light')
 onMounted(() => {
   theme.value = localStorage.getItem('theme') || 'dark'
 })
+=======
+  <div class="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <div class="card p-4 shadow" style="width: 350px;">
+      <div style="text-align:center; padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.2);">
+        <img src="/logo_karen.jpg" alt="Logo" style="max-height: 60px;" />
+      </div>
+        
+      <form @submit.prevent="login">
+        <div class="mb-3">
+          <label>Email</label>
+          <input v-model="email" type="email" class="form-control" required />
+        </div>
+        <div class="mb-3">
+          <label>Contraseña</label>
+          <input v-model="password" type="password" class="form-control" required />
+        </div>
+        <button class="btn btn-primary w-100">Entrar</button>
+      </form>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import axios from 'axios'
+import Swal from 'sweetalert2'
+
+const email = ref('')
+const password = ref('')
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
 
 const login = () => {
   axios.post('/login', { email: email.value, password: password.value })
     .then(res => {
       if (res.data.success) {
         localStorage.setItem('token', res.data.token)
+<<<<<<< HEAD
         Swal.fire({
           title: '¡Bienvenido!',
           text: 'Login correcto',
@@ -105,6 +137,10 @@ const login = () => {
         }).then(() => {
           window.location.href = '/dashboard'
         })
+=======
+        Swal.fire('Bienvenido', 'Login correcto', 'success')
+        window.location.href = '/dashboard'
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
       } else {
         Swal.fire('Error', res.data.message, 'error')
       }
@@ -114,5 +150,8 @@ const login = () => {
     })
 }
 </script>
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35

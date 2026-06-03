@@ -1,9 +1,17 @@
 <template>
+<<<<<<< HEAD
   <CRow>
     <CCol :xs="12">
       <CCard class="mb-4">
         <CCardHeader class="d-flex justify-content-between align-items-center">
           <strong><CIcon :icon="cilChartLine" class="me-2" />Odontograma Visual</strong>
+=======
+  <div class="row w-100">
+    <div class="col-12">
+      <CCard class="shadow-sm">
+        <CCardHeader class="d-flex justify-content-between align-items-center">
+          <strong>Odontograma Visual</strong>
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
           <div style="width: 300px;">
             <CFormSelect v-model="pacienteId" @change="cargarOdontograma" size="sm">
               <option value="">Seleccione un paciente...</option>
@@ -13,33 +21,52 @@
         </CCardHeader>
         <CCardBody>
           <div v-if="!pacienteId" class="text-center py-5">
+<<<<<<< HEAD
             <CIcon :icon="cilUser" size="xl" class="text-muted mb-3" />
+=======
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
             <h5 class="text-muted">Seleccione un paciente para ver su odontograma</h5>
           </div>
           
           <div v-else>
             <div class="row text-center mb-4">
+<<<<<<< HEAD
               <div class="col-12 mb-3"><h6 class="text-primary fw-bold">ARCADA SUPERIOR</h6></div>
               <div class="col-12 d-flex justify-content-center flex-wrap">
                 <div v-for="n in superior" :key="n" class="tooth-box shadow-sm" :class="statusColor(n)" @click="editTooth(n)">
+=======
+              <div class="col-12 mb-3"><h6 class="text-primary">Superior</h6></div>
+              <div class="col-12 d-flex justify-content-center flex-wrap">
+                <div v-for="n in superior" :key="n" class="tooth-box" :class="statusColor(n)" @click="editTooth(n)">
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
                   <div class="tooth-num">{{ n }}</div>
                   <div class="tooth-status">{{ toothStatus(n) }}</div>
                 </div>
               </div>
             </div>
 
+<<<<<<< HEAD
             <hr class="my-4">
 
             <div class="row text-center mt-4">
               <div class="col-12 mb-3"><h6 class="text-primary fw-bold">ARCADA INFERIOR</h6></div>
               <div class="col-12 d-flex justify-content-center flex-wrap">
                 <div v-for="n in inferior" :key="n" class="tooth-box shadow-sm" :class="statusColor(n)" @click="editTooth(n)">
+=======
+            <hr>
+
+            <div class="row text-center mt-4">
+              <div class="col-12 mb-3"><h6 class="text-primary">Inferior</h6></div>
+              <div class="col-12 d-flex justify-content-center flex-wrap">
+                <div v-for="n in inferior" :key="n" class="tooth-box" :class="statusColor(n)" @click="editTooth(n)">
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
                   <div class="tooth-num">{{ n }}</div>
                   <div class="tooth-status">{{ toothStatus(n) }}</div>
                 </div>
               </div>
             </div>
 
+<<<<<<< HEAD
             <CCard class="mt-5 border-top border-top-3 border-top-primary">
               <CCardBody>
                 <h6 class="mb-3">Leyenda de Estados:</h6>
@@ -56,6 +83,22 @@
         </CCardBody>
       </CCard>
     </CCol>
+=======
+            <div class="mt-4">
+                <h6>Leyenda:</h6>
+                <div class="d-flex gap-3">
+                    <span><CBadge color="success">Sano</CBadge></span>
+                    <span><CBadge color="danger">Caries</CBadge></span>
+                    <span><CBadge color="primary">Restaurado</CBadge></span>
+                    <span><CBadge color="secondary">Extraido</CBadge></span>
+                    <span><CBadge color="warning">Tratamiento</CBadge></span>
+                </div>
+            </div>
+          </div>
+        </CCardBody>
+      </CCard>
+    </div>
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
 
     <!-- Modal Editar Diente -->
     <CModal :visible="modalTooth" @close="modalTooth = false">
@@ -63,9 +106,15 @@
         <CModalTitle>Pieza Dental {{ selectedTooth }}</CModalTitle>
       </CModalHeader>
       <CModalBody>
+<<<<<<< HEAD
         <CForm @submit.prevent="saveTooth" class="row g-3">
           <CCol :md="12">
             <CFormLabel>Estado del Diente</CFormLabel>
+=======
+        <CForm @submit.prevent="saveTooth">
+          <div class="mb-3">
+            <CFormLabel>Estado</CFormLabel>
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
             <CFormSelect v-model="toothForm.estado">
               <option value="sano">Sano</option>
               <option value="caries">Caries</option>
@@ -73,6 +122,7 @@
               <option value="extraido">Extraído</option>
               <option value="tratamiento">En tratamiento</option>
             </CFormSelect>
+<<<<<<< HEAD
           </CCol>
           <CCol :md="12">
             <CFormTextarea v-model="toothForm.observaciones" label="Observaciones Clínicas" rows="4" placeholder="Detalle el estado o hallazgos..."></CFormTextarea>
@@ -80,16 +130,29 @@
           <div class="mt-4 text-end">
              <CButton color="secondary" class="me-2" @click="modalTooth = false">Cancelar</CButton>
              <CButton color="primary" type="submit">Guardar Hallazgos</CButton>
+=======
+          </div>
+          <div class="mb-3">
+            <CFormTextarea v-model="toothForm.observaciones" label="Observaciones" rows="3"></CFormTextarea>
+          </div>
+          <div class="text-end">
+             <CButton color="primary" type="submit">Guardar Cambios</CButton>
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
           </div>
         </CForm>
       </CModalBody>
     </CModal>
+<<<<<<< HEAD
   </CRow>
+=======
+  </div>
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
 </template>
 
 <script>
 import axios from 'axios'
 import Swal from 'sweetalert2'
+<<<<<<< HEAD
 import { cilChartLine, cilUser } from '@coreui/icons'
 
 export default {
@@ -98,6 +161,10 @@ export default {
       cilChartLine, cilUser
     }
   },
+=======
+
+export default {
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
   data() {
     return {
       pacientes: [],
@@ -126,6 +193,10 @@ export default {
         return
       }
       axios.get('/odontogramas').then(res => {
+<<<<<<< HEAD
+=======
+        // En un sistema real filtraríamos por paciente_id en el backend
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
         this.odontograma = res.data.filter(o => o.paciente_id == this.pacienteId)
       })
     },
@@ -135,11 +206,19 @@ export default {
     },
     statusColor(n) {
       const s = this.toothStatus(n)
+<<<<<<< HEAD
       if (s === 'caries') return 'bg-danger text-white border-danger'
       if (s === 'restaurado') return 'bg-primary text-white border-primary'
       if (s === 'extraido') return 'bg-secondary text-white border-secondary'
       if (s === 'tratamiento') return 'bg-warning text-dark border-warning'
       return 'bg-success text-white border-success'
+=======
+      if (s === 'caries') return 'bg-danger text-white'
+      if (s === 'restaurado') return 'bg-primary text-white'
+      if (s === 'extraido') return 'bg-secondary text-white'
+      if (s === 'tratamiento') return 'bg-warning text-dark'
+      return 'bg-success text-white'
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
     },
     editTooth(n) {
       this.selectedTooth = n
@@ -165,6 +244,7 @@ export default {
         axios[method](url, data).then(() => {
             this.cargarOdontograma()
             this.modalTooth = false
+<<<<<<< HEAD
             Swal.fire({
               title: 'Guardado',
               text: `Pieza dental ${this.selectedTooth} actualizada correctamente`,
@@ -172,6 +252,9 @@ export default {
               timer: 1500,
               showConfirmButton: false
             })
+=======
+            Swal.fire('Guardado', `Diente ${this.selectedTooth} actualizado`, 'success')
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
         })
     }
   }
@@ -180,15 +263,23 @@ export default {
 
 <style scoped>
 .tooth-box {
+<<<<<<< HEAD
   width: 80px;
   height: 80px;
   border: 2px solid #dee2e6;
   margin: 6px;
+=======
+  width: 70px;
+  height: 70px;
+  border: 1px solid #ccc;
+  margin: 5px;
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+<<<<<<< HEAD
   border-radius: 12px;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
@@ -208,3 +299,21 @@ export default {
 }
 </style>
 
+=======
+  border-radius: 8px;
+  transition: transform 0.2s;
+}
+.tooth-box:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.tooth-num {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.tooth-status {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+</style>
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35

@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <CRow>
     <CCol :xs="12">
       <CCard class="mb-4">
@@ -12,10 +13,21 @@
             <CButton color="primary" size="sm" @click.prevent="newPaciente">
               <CIcon :icon="cilPlus" class="me-1" /> Nuevo
             </CButton>
+=======
+  <div class="row w-100">
+    <div class="col-12">
+      <CCard class="shadow-sm">
+        <CCardHeader class="d-flex justify-content-between align-items-center">
+          <strong>Pacientes</strong>
+          <div>
+            <CFormInput v-model="busqueda" placeholder="Buscar..." size="sm" class="me-2 d-inline-block" style="width:200px;" />
+            <CButton color="primary" size="sm" @click.prevent="newPaciente">Nuevo Paciente</CButton>
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
           </div>
         </CCardHeader>
 
         <CCardBody>
+<<<<<<< HEAD
           <CTable align="middle" responsive hover borderless>
             <CTableHead color="light">
               <CTableRow>
@@ -23,10 +35,21 @@
                 <CTableHeaderCell>Celular</CTableHeaderCell>
                 <CTableHeaderCell>Fecha Nacimiento</CTableHeaderCell>
                 <CTableHeaderCell class="text-center">Acciones</CTableHeaderCell>
+=======
+          <CTable align="middle" responsive hover>
+            <CTableHead color="light">
+              <CTableRow>
+                <!-- <CTableHeaderCell>ID</CTableHeaderCell> -->
+                <CTableHeaderCell>Nombre</CTableHeaderCell>
+                <CTableHeaderCell>Celular</CTableHeaderCell>
+                <CTableHeaderCell>Fecha Nacimiento</CTableHeaderCell>
+                <CTableHeaderCell>Acciones</CTableHeaderCell>
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
               </CTableRow>
             </CTableHead>
             <CTableBody>
               <CTableRow v-for="paciente in pacientesFiltrados" :key="paciente.id">
+<<<<<<< HEAD
                 <CTableDataCell>{{ paciente.nombre }}</CTableDataCell>
                 <CTableDataCell>{{ paciente.celular }}</CTableDataCell>
                 <CTableDataCell>{{ paciente.fecha_nacimiento }}</CTableDataCell>
@@ -45,12 +68,25 @@
                       <CIcon :icon="cilTrash" />
                     </CButton>
                   </CButtonGroup>
+=======
+                <!-- <CTableDataCell>{{ paciente.id }}</CTableDataCell> -->
+                <CTableDataCell>{{ paciente.nombre }}</CTableDataCell>
+                <CTableDataCell>{{ paciente.celular }}</CTableDataCell>
+                <CTableDataCell>{{ paciente.fecha_nacimiento }}</CTableDataCell>
+                <CTableDataCell>
+                  <CButton color="info" size="sm" @click="verPaciente(paciente)" title="Ver Detalle">Detalle</CButton>
+                  <CButton color="warning" size="sm" class="ms-1" @click="editarPaciente(paciente)" title="Editar">Editar</CButton>
+                  <!-- <CButton color="dark" size="sm" class="ms-1" @click="$router.push('/odontogramas')" title="Odontograma">Odon.</CButton> -->
+                  <CButton color="success" size="sm" class="ms-1"  @click="VerCitas(paciente.id)" title="Citas">Citas</CButton>
+                  <CButton color="danger" size="sm" class="ms-1" @click="eliminarPaciente(paciente.id)" title="Eliminar">Eliminar</CButton>
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
                 </CTableDataCell>
               </CTableRow>
             </CTableBody>
           </CTable>
         </CCardBody>
       </CCard>
+<<<<<<< HEAD
     </CCol>
 
     <!-- Modal Nuevo/Editar -->
@@ -75,10 +111,38 @@
               <CFormCheck label="Medicacion" v-model="nuevo.medicacion" />
               <CFormCheck label="Hemorragia" v-model="nuevo.hemorragia" />
               <CFormCheck label="Cirugía" v-model="nuevo.intervencion_quirurgica" />
+=======
+    </div>
+
+    <!-- Modal Nuevo/Editar -->
+    <CModal :visible="modalNuevo" @close="modalNuevo=false">
+      <CModalHeader>
+        <CModalTitle class="w-100 text-center">{{ nuevo.id ? 'Actualizar' : 'Registrar' }} Paciente</CModalTitle>
+      </CModalHeader>
+      <CModalBody>
+        <CForm class="row g-3" @submit.prevent="guardarPaciente">
+          <div class="row">
+            <div class="col-md-6">
+              <CFormInput v-model="nuevo.nombre" label="Nombre" placeholder="Ingrese nombre..." required />
+              <CFormInput v-model="nuevo.celular" label="Celular" />
+              <CFormInput v-model="nuevo.fecha_nacimiento" type="date" label="Fecha Nacimiento" />
+              <CFormInput v-model="nuevo.direccion" label="Dirección" placeholder="Dirección..." />
+            </div>
+            <div class="col-md-6">
+              
+              <h6 class="text-success">Antecedentes Médicos</h6>
+              <CFormCheck label="Tratamiento Médico" v-model="nuevo.tratamiento_medico" />
+              <CFormCheck label="Paciente Cardiaco" v-model="nuevo.paciente_cardiaco" />
+              <CFormCheck label="Antecedentes Familiares" v-model="nuevo.antecedentes_familiares" />
+              <CFormCheck label="Medicacion Previa" v-model="nuevo.medicacion" />
+              <CFormCheck label="Hemorragia" v-model="nuevo.hemorragia" />
+              <CFormCheck label="Intervención Quirúrgica" v-model="nuevo.intervencion_quirurgica" />
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
               <CFormCheck label="Alergias" v-model="nuevo.alergias" />
               <CFormCheck label="Diabetes" v-model="nuevo.diabetes" />
               <CFormCheck label="Intolerancias" v-model="nuevo.intolerancias" />
               <CFormCheck label="Gestante" v-model="nuevo.gestante" />
+<<<<<<< HEAD
             </div>
             <CFormSelect v-model="nuevo.presion_arterial" label="Presión Arterial" :options="['alta','normal','baja']" class="mt-2" />
             <CFormTextarea v-model="nuevo.habitos" label="Hábitos" placeholder="Ej: fuma, bebe, etc." class="mt-2" />
@@ -86,6 +150,14 @@
           <div class="mt-4 text-end">
             <CButton color="secondary" class="me-2" @click="modalNuevo=false">Cancelar</CButton>
             <CButton color="primary" type="submit">Guardar Cambios</CButton>
+=======
+              <CFormSelect v-model="nuevo.presion_arterial" label="Presión Arterial" :options="['alta','normal','baja']" />
+              <CFormTextarea v-model="nuevo.habitos" label="Hábitos" placeholder="Ej: fuma, bebe, etc." />
+            </div>
+          </div>
+          <div class="mt-3 text-end">
+            <CButton color="primary" type="submit">Guardar Paciente</CButton>
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
           </div>
         </CForm>
       </CModalBody>
@@ -94,6 +166,7 @@
     <!-- Modal Ver -->
     <CModal :visible="modalVer" @close="modalVer=false" size="lg">
       <CModalHeader>
+<<<<<<< HEAD
         <CModalTitle>Detalle del Paciente</CModalTitle>
       </CModalHeader>
       <CModalBody>
@@ -129,11 +202,45 @@
       </CModalBody>
     </CModal>
   </CRow>
+=======
+        <CModalTitle class="w-100 text-center">Detalle del Paciente</CModalTitle>
+      </CModalHeader>
+      <CModalBody>
+        <div class="row" v-if="pacienteSeleccionado">
+          <div class="col-md-6">
+            <p><strong>Nombre:</strong> {{ pacienteSeleccionado.nombre }}</p>
+            <p><strong>Celular:</strong> {{ pacienteSeleccionado.celular }}</p>
+            <p><strong>Fecha Nacimiento:</strong> {{ pacienteSeleccionado.fecha_nacimiento }}</p>
+            <p><strong>Dirección:</strong> {{ pacienteSeleccionado.direccion }}</p>
+          </div>
+          <div class="col-md-6">
+            <h6 class="text-success">Antecedentes Médicos</h6>
+            <ul>
+              <li v-if="pacienteSeleccionado.tratamiento_medico">Tratamiento Médico</li>
+              <li v-if="pacienteSeleccionado.paciente_cardiaco">Paciente Cardíaco</li>
+              <li v-if="pacienteSeleccionado.antecedentes_familiares">Antecedentes Familiares</li>
+              <li v-if="pacienteSeleccionado.medicacion">Medicaciones Previas</li>
+              <li v-if="pacienteSeleccionado.hemorragia">Hemorragia</li>
+              <li v-if="pacienteSeleccionado.intervencion_quirurgica">Intervención Quirúrgica</li>
+              <li v-if="pacienteSeleccionado.alergias">Alergias</li>
+              <li v-if="pacienteSeleccionado.diabetes">Diabetes</li>
+              <li v-if="pacienteSeleccionado.intolerancias">Intolerancias</li>
+              <li v-if="pacienteSeleccionado.gestante">Gestante</li>
+              <li v-if="pacienteSeleccionado.presion_arterial">Presión Arterial: {{ pacienteSeleccionado.presion_arterial }}</li>
+              <li v-if="pacienteSeleccionado.habitos">Hábitos: {{ pacienteSeleccionado.habitos }}</li>
+            </ul>
+          </div>
+        </div>
+      </CModalBody>
+    </CModal>
+  </div>
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
 </template>
 
 <script>
 import axios from 'axios'
 import Swal from 'sweetalert2'
+<<<<<<< HEAD
 import { cilUser, cilSearch, cilPlus, cilFile, cilPencil, cilCalendar, cilTrash } from '@coreui/icons'
 
 export default {
@@ -142,6 +249,10 @@ export default {
       cilUser, cilSearch, cilPlus, cilFile, cilPencil, cilCalendar, cilTrash
     }
   },
+=======
+
+export default {
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
   data() {
     return {
       pacientes: [],
@@ -178,6 +289,10 @@ export default {
     }
   },
   mounted() {
+<<<<<<< HEAD
+=======
+    console.log("API URL:", import.meta.env.VITE_API_URL)
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
     this.cargarPacientes()
   },
   methods: {
@@ -227,13 +342,30 @@ export default {
       this.modalNuevo = true
     },
     cargarPacientes() {
+<<<<<<< HEAD
+=======
+      //const baseURL = import.meta.env.VITE_API_URL
+      //axios.get('http://localhost:8000/api/pacientes')
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
       axios.get('/pacientes')
         .then(res => { this.pacientes = res.data })
         .catch(err => console.error("Error cargando pacientes:", err))
     },
     guardarPaciente() {
+<<<<<<< HEAD
       const url = this.nuevo.id ? `/pacientes/${this.nuevo.id}` : `/pacientes`
       const method = this.nuevo.id ? 'put' : 'post'
+=======
+    //  const url = this.nuevo.id 
+    //    ? `http://localhost:8000/api/pacientes/${this.nuevo.id}`
+    //    : 'http://localhost:8000/api/pacientes'
+      
+    //const baseURL = import.meta.env.VITE_API_URL
+    const url = this.nuevo.id
+      ? `/pacientes/${this.nuevo.id}`
+      : `/pacientes`
+        const method = this.nuevo.id ? 'put' : 'post'
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
 
       axios[method](url, this.nuevo)
         .then(() => {
@@ -280,10 +412,17 @@ export default {
         }
       })
     },
+<<<<<<< HEAD
+=======
+
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
     VerCitas(id){
       this.$router.push(`/pacientes/${id}/citas`);
     }
   }
 }
 </script>
+<<<<<<< HEAD
 
+=======
+>>>>>>> b35155d9e18d901e647d190257b0c6b01de5cc35
